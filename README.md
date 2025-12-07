@@ -8,11 +8,11 @@ This project is part of the Introduction to Robotics course (3rd semester). The 
 
 ## Hardware Components
 
-- Arduino board
-- 2x DC motors (left and right wheels)
-- Motor driver (L298N or similar)
+- Arduino UNO R3
+- 2x 12V DC motors (left and right wheels)
+- L298N Motor driver
 - 3x IR sensors (front, left, right)
-- Power supply
+- 12V Li-Ion Battery Pack
 
 ## Features
 
@@ -34,8 +34,8 @@ This project is part of the Introduction to Robotics course (3rd semester). The 
 
 ## Setup Instructions
 
-1. Upload the `micromouse_navigation_code.ino` to your Arduino board
-2. Adjust the `wallThreshold` value based on your IR sensor readings
+1. Upload the `micromouse_navigation_code.ino` to the Arduino board
+2. Adjust the `wallThreshold` value based on the IR sensor readings
 3. Modify `baseSpeed` to control robot speed (0-255)
 4. Place the robot in a maze and power on
 
