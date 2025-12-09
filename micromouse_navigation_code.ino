@@ -1,12 +1,12 @@
 // Micro Mouse Navigation Code - Intro to Robotics Course Project
-// Ekansh Arohi
+// exorev07
 
-// Motor A (Left Motor)
+// Left Motor
 #define ENA 9
 #define IN1 8
 #define IN2 7
 
-// Motor B (Right Motor)
+// Right Motor
 #define ENB 10
 #define IN3 6
 #define IN4 5
@@ -16,11 +16,11 @@
 #define IR_LEFT A1
 #define IR_RIGHT A2
 
-// Thresholds (adjust based on your sensors)
-int wallThreshold = 500;  // Sensors give ~100 when wall detected, ~1000 when clear
-int baseSpeed = 32;       // Base motor speed (0-255)
-float leftMotorCompensation = 1.0;  // Increase if robot curves right, decrease if curves left
-float rightMotorCompensation = 1.12;  // Keep this at 1.0 as reference
+// Thresholds
+int wallThreshold = 500; // ~100 when wall detected & ~1000 when clear
+int baseSpeed = 32; // Base motor speed (0-255)
+float leftMotorCompensation = 1.0;
+float rightMotorCompensation = 1.12;
 
 void setup() {
   // Motor pins as outputs
@@ -36,20 +36,11 @@ void setup() {
   pinMode(IR_LEFT, INPUT);
   pinMode(IR_RIGHT, INPUT);
   
-  // Start serial for debugging
+  // Serial for debugging
   Serial.begin(9600);
   
-  delay(2000); // 2 second delay before starting
-  
-  // ===== TEST SECTION - Remove this after testing =====
-  Serial.println("Testing motors - both wheels forward for 3 seconds");
-  moveForward(baseSpeed);
-  delay(3000);
-  stopMotors();
-  delay(1000); // Pause before starting main program
-  Serial.println("Test complete - starting main navigation");
-  // ===== END TEST SECTION =====
-}
+  delay(2000);
+
 
 void loop() {
   // Read IR sensors
@@ -65,7 +56,7 @@ void loop() {
   Serial.print(" | Right: ");
   Serial.println(rightVal);
   
-  // Wall detection (sensors are inverted - LOW value = wall detected)
+  // Wall detection
   bool frontWall = (frontVal < wallThreshold);
   bool leftWall = (leftVal < wallThreshold);
   bool rightWall = (rightVal < wallThreshold);
@@ -102,11 +93,9 @@ void loop() {
     // No wall in front - keep moving forward
     moveForward(baseSpeed);
   }
-  
   delay(10); // Small delay for stability
 }
 
-// Move forward - BOTH motors forward
 void moveForward(int speed) {
   // Left motor forward (with compensation)
   digitalWrite(IN1, HIGH);
@@ -119,7 +108,6 @@ void moveForward(int speed) {
   analogWrite(ENB, speed * rightMotorCompensation);
 }
 
-// Move backward - BOTH motors backward
 void moveBackward(int speed) {
   // Left motor backward
   digitalWrite(IN1, LOW);
@@ -132,7 +120,6 @@ void moveBackward(int speed) {
   analogWrite(ENB, speed);
 }
 
-// Turn left - Left motor backward, Right motor forward
 void turnLeft() {
   // Left motor backward
   digitalWrite(IN1, LOW);
@@ -145,7 +132,6 @@ void turnLeft() {
   analogWrite(ENB, baseSpeed);
 }
 
-// Turn right - Left motor forward, Right motor backward
 void turnRight() {
   // Left motor forward
   digitalWrite(IN1, HIGH);
@@ -158,7 +144,6 @@ void turnRight() {
   analogWrite(ENB, baseSpeed);
 }
 
-// Turn around (180 degrees) - same as turn right but longer
 void turnAround() {
   // Left motor forward
   digitalWrite(IN1, HIGH);
@@ -171,7 +156,6 @@ void turnAround() {
   analogWrite(ENB, baseSpeed+10);
 }
 
-// Stop motors
 void stopMotors() {
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, LOW);
